@@ -1,0 +1,78 @@
+services:
+  sentinel:
+    image: bladex/sentinel-dashboard:1.8.6
+    container_name: sentinel-1
+    ports:
+      - "8858:8858"
+  mysql:
+    image: mysql:8.0
+    container_name: mysql1
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=sales_platform 
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./mysql/data:/var/lib/mysql"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p123456"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  redis:
+    image: redis:7.0-alpine # 使用轻量级镜像
+    container_name: redis_server
+    restart: always
+    ports:
+      - "6380:6379" # 映射端口到宿主机，方便你用工具连接查看
+    command: redis-server --requirepass 123456 --appendonly yes # 设置密码并开启 AOF 持久化
+    volumes:
+      - ./redis_data:/data # 数据持久化，防止容器重启后缓存丢失
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  backend-service:
+    build: ./backend
+    container_name: backend-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/sales_platform?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_DATA_REDIS_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_CLOUD_SENTINEL_TRANSPORT_DASHBOARD=sentinel:8858
+      - AI_PREDICTION_SERVICE_URL=http://ai-service:5000
+    depends_on:
+      - mysql
+      - redis
+  ai-service:
+    build: ./AiPredict
+    container_name: ai-service       
+    ports:
+      - "5000:5000"
+    volumes:
+      - ai-model-storage:/app/model_storage
+    depends_on:
+      - mysql
+      - redis
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend-service
+volumes:
+  mysql-data:
+  ai-model-storage:

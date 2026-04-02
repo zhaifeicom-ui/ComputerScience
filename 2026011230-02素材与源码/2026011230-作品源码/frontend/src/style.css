@@ -1,0 +1,286 @@
+@import 'tailwindcss';
+
+@layer base {
+  body {
+    @apply text-gray-900 font-sans antialiased;
+    background-color: #f5f5f7;
+    letter-spacing: -0.015em;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-white/72 backdrop-blur-[20px] border border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.04)] rounded-[18px];
+  }
+  .apple-btn {
+    @apply text-white hover:bg-blue-600 transition-all duration-300 rounded-full px-6 py-2 shadow-sm active:scale-97;
+    background-color: #0071e3;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .apple-btn-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 transition-all duration-300 rounded-full px-6 py-2 active:scale-97;
+    color: #1d1d1f;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  
+  /* 呼吸感动画 */
+  .scale-up-breathe {
+    animation: breathe 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Element Plus 暗色模式覆盖为苹果风亮色 */
+:root, html.dark {
+  --el-color-primary: #0071E3;
+  --el-color-primary-light-3: #4C99EB;
+  --el-color-primary-light-5: #80BFFF;
+  --el-color-primary-light-7: #B3D9FF;
+  --el-color-primary-light-9: #E6F2FF;
+  --el-color-success: #34c759;
+  --el-color-warning: #ff9500;
+  --el-color-danger: #ff3b30;
+  --el-color-info: #8e8e93;
+  --el-bg-color: #ffffff !important;
+  --el-bg-color-page: #f5f5f7 !important;
+  --el-bg-color-overlay: #ffffff !important;
+  --el-text-color-primary: #1d1d1f !important;
+  --el-text-color-regular: #48484a !important;
+  --el-text-color-secondary: #86868b !important;
+  --el-border-color: #e5e5ea !important;
+  --el-border-color-light: #f2f2f7 !important;
+  --el-fill-color-blank: #ffffff !important;
+  --el-border-radius-base: 12px;
+  color-scheme: light !important;
+}
+
+.el-button {
+  border-radius: 9999px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.el-button:active {
+  transform: scale(0.97);
+}
+
+.el-card, .el-dialog {
+  border-radius: 20px !important;
+  border: none !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.el-input__wrapper, .el-select__wrapper {
+  border-radius: 12px !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 0 0 1px transparent inset !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.el-input__wrapper.is-focus, .el-select__wrapper.is-focus {
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 1px #0071E3 inset, 0 4px 12px rgba(0, 113, 227, 0.1) !important;
+}
+
+/* Radio Button 苹果风分段控制器样式 */
+.el-radio-group {
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 2px;
+  border-radius: 8px;
+  display: inline-flex;
+}
+
+.el-radio-button__inner {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+  color: #86868b !important;
+  font-weight: 500 !important;
+  padding: 6px 16px !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.el-radio-button__original-radio:checked + .el-radio-button__inner {
+  background-color: #ffffff !important;
+  color: #1d1d1f !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06) !important;
+}
+
+.el-radio-button__original-radio:checked + .el-radio-button__inner:hover {
+  color: #1d1d1f !important;
+}
+
+.el-radio-button:focus-within .el-radio-button__inner {
+  box-shadow: none !important;
+}
+
+.el-table {
+  --el-table-bg-color: transparent !important;
+  --el-table-tr-bg-color: transparent !important;
+  --el-table-header-bg-color: transparent !important;
+  --el-table-row-hover-bg-color: transparent !important;
+  --el-table-border-color: #f2f2f7 !important;
+  --el-table-text-color: #1d1d1f !important;
+  --el-table-header-text-color: #86868b !important;
+  background-color: transparent !important;
+}
+
+/* 强制重写Element Plus暗黑模式下所有可能的背景色 */
+.el-table,
+.el-table__expanded-cell,
+html.dark .el-table,
+html.dark .el-table__expanded-cell,
+.el-table th,
+.el-table tr,
+.el-table td {
+  background-color: transparent !important;
+}
+
+.el-table,
+.el-table__inner-wrapper,
+.el-table__inner-wrapper::before,
+.el-table__body-wrapper,
+.el-table__header-wrapper,
+.el-table__empty-block {
+  background-color: transparent !important;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #86868b !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  background-color: #f5f5f7 !important;
+  padding: 12px 0 !important;
+}
+
+.el-table td.el-table__cell {
+  color: #1d1d1f !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+  background-color: transparent !important;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.el-table tr {
+  background-color: transparent !important;
+}
+
+/* 强力重写深色模式下的表格背景 */
+html.dark .el-table, 
+html.dark .el-table__inner-wrapper, 
+html.dark .el-table__body-wrapper, 
+html.dark .el-table__header-wrapper,
+html.dark .el-table__empty-block,
+html.dark .el-table th.el-table__cell,
+html.dark .el-table td.el-table__cell,
+html.dark .el-table tr,
+html.dark .el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell,
+.el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+  background-color: transparent !important;
+}
+
+/* 表格 hover 效果修复 */
+.el-table tbody tr:hover > td.el-table__cell,
+html.dark .el-table tbody tr:hover > td.el-table__cell {
+  background-color: #f5f5f7 !important;
+}
+
+.el-table tbody tr:hover > td.el-table__cell:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 3px;
+  background-color: #0071E3;
+  border-radius: 0 3px 3px 0;
+  transform: scaleY(0);
+  animation: scaleIn 0.2s forwards cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@keyframes scaleIn {
+  to { transform: scaleY(1); }
+}
+
+.slide-in-enter-active,
+.slide-in-leave-active {
+  transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.slide-in-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.slide-in-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* ====== Pagination 分页器苹果风极简设计 ====== */
+.el-pagination {
+  --el-pagination-bg-color: transparent !important;
+  --el-pagination-hover-color: #1d1d1f !important;
+}
+
+.el-pagination button {
+  background-color: transparent !important;
+  border: none !important;
+  color: #86868b !important;
+  transition: all 0.3s ease !important;
+}
+
+.el-pagination button:hover:not(:disabled) {
+  color: #1d1d1f !important;
+}
+
+.el-pagination button:disabled {
+  opacity: 0.3 !important;
+}
+
+.el-pager li {
+  background-color: transparent !important;
+  border: none !important;
+  color: #86868b !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.el-pager li:hover {
+  color: #1d1d1f !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.el-pager li.is-active {
+  background-color: #0071E3 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3) !important;
+}
+
+/* 页面内元素的 v-move 动画 */
+.list-move, /* 对移动中的元素应用的过渡 */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+/* 确保将离开的元素从布局流中删除
+  以便能够正确地计算移动的动画。 */
+.list-leave-active {
+  position: absolute;
+}
